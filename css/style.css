@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Sans:wght@300;400;700&display=swap');
+
+body {
+    font-family: 'Inria Sans';
+    font-weight: 400;
+    text-decoration: none;
+    max-width: 100%;
+    background: rgb(30,211,0);
+	background: linear-gradient(90deg, rgba(30,211,0,1) -50%, rgba(0,152,217,1) 100%);
+}
+
+.nav {
+    text-decoration: none;
+	
+}
+
+.container {
+	text-align: center;
+	font-size: 48px;
+	font-weight: 700;
+	letter-spacing: 3px;
+	color: white;
+
+}
+
+form {
+	color: white;
+}
+
+.btn-login {
+	border: none;
+	width: 77px;
+	height: 33px;
+	left: 400px;
+	top: 500px;
+	background: #00D7ED;
+	color: white;
+	font-weight: 700;
+	border-radius: 7px;
+
+}
+.sidebar {
+	position: fixed;
+	left: 0;
+	width: 230px;
+	height: 100%;
+	font-size: 22px;
+	background: #fff
+  }
+  
+  ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+  }
+  
+  .sidebar header {
+	padding-left: 7px;
+	margin-top: 5px;
+	font-size: 26px;
+	line-height: 70px;
+	user-select: none;
+  }
+  
+  .sidebar ul a {
+	text-decoration: none;
+	display: block;
+	height: 100%;
+	width: 100%;
+	line-height: 65px;
+	font-size: 22px;
+	color: #868585;
+	padding-left: 4px;
+	box-sizing: border-box;
+	border-top: 1px solid #f1f1f1;
+	border-bottom: 1px solid #868585;
+	transition: .1s;
+  }
+  
+  ul li:hover a{
+	color: #fff;
+	background: #0199D4;
+	font-size: 27px;
+  }
+  
+  .content{
+	margin-top: 69px;
+	margin-left: 25%;
+  }
+  
+  .card-body h5 {
+	font-size: 38px;
+	text-align: left;
+  }
+  
+  .card-text {
+	text-align: left;
+  }
+
+  .card-body p {
+	font-size: 24px;
+  }
+  
+  .card {
+	width: 90%;
+  }
+  
+  .col-sm-9 {
+	padding-top:5%;
+  }
+
+  .deeznaf {
+	text-decoration: none;
+	color: black;
+	margin-right: 75%;
+  }
+  
+  .btn-home {
+	background-image: linear-gradient(to right, #0199D4 0%, #14BF4A 50%, #0199D4  100%);
+            margin-top: -15%;
+            padding: 7px 10px;
+            text-align: center;
+            text-transform: uppercase;
+            transition: 0.5s;
+            background-size: 200% auto;
+            color: white;            
+            box-shadow: 0px 0px 15px #eee;
+            border-radius: 10px;
+            display: block;
+			background-position: right center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+			border: none;
+}  
+
+          .btn-home:hover {
+            background-position: left center; /* change the direction of the change here */
+            color: #fff;
+            text-decoration: none;
+          }
+
+		  
