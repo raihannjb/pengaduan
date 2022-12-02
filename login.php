@@ -45,14 +45,7 @@
       <label style="font-weight:400;" for="exampleInputPassword1">Password:</label>
       <input type="password" class="form-control" name="password" id="exampleInputPassword1" placeholder="Password" required="">
     </div>
-    <label style="font-weight:400; margin-top:10px;" for="floatingSelectGrid">Pilih Role:</label>
-    <div class="form-label-group">
-      <select class="form-select" id="floatingSelectGrid" name="level">
-        <option selected>--Pilih Role--</option>
-        <option value="Admin">Admin</option>
-        <option value="Guru">Petugas</option>
-        <option value="Masyarakat">Masyarakat</option>
-      </select>
+    
     </div>
          Belum punya akun? <b><a class="daftar" href="registrasi.php">Daftar</a></b>
     <div style="margin-left:67%;">

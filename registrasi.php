@@ -1,3 +1,44 @@
+<?php
+$nik="";
+$nama="";
+$username="";
+$password="";
+$notelp="";
+require_once("koneksi.php");
+
+if(isset($_POST['register'])){
+
+    // filter data yang diinputkan
+    $nik = filter_input(INPUT_POST, 'nik', FILTER_SANITIZE_STRING);
+    $nama = filter_input(INPUT_POST, 'nama', FILTER_SANITIZE_STRING);
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+    // enkripsi password
+    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
+    $notelp = filter_input(INPUT_POST, 'notelp', FILTER_VALIDATE_EMAIL);
+
+
+    // menyiapkan query
+    $sql = "INSERT INTO users (nik , nama, username, notelp, password) 
+            VALUES (:nik, :nama, :username, :notelp, :password)";
+    $stmt = $db->prepare($sql);
+
+    // bind parameter ke query
+    $params = array(
+        ":nik" => $nik,
+        ":nama" => $nama,
+        ":username" => $username,
+        ":password" => $password,
+        ":notelp" => $notelp
+    );
+
+    // eksekusi query untuk menyimpan ke database
+    $saved = $stmt->execute($params);
+
+    // jika query simpan berhasil, maka user sudah terdaftar
+    // maka alihkan ke halaman login
+    if($saved) header("Location: login.php");
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +51,6 @@
 
 	<title>Pengaduan Layanan Masyarakat</title>
 </head>
-
 <body style="margin-top:40px;">
   <div class="shadow p-1 mb-3 bg-white rounded">
     <nav class="navbar bg-white fixed-top">
@@ -31,8 +71,8 @@
 	}
 	?>
 <div class="container">
-	FORM REGISTRASI 
-	<br>
+	
+	
     <div style="margin-left:4.8%; margin-top:2%" class="card">
       <div style="text-align: left;" class="card-body">
 
@@ -46,9 +86,9 @@
 
 
           <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
-            <label for="nik" class="col-sm-2 col-form-label">Nama</label>
+            <label for="nama" class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nik" name="nik" value="<?php echo $nik ?>">
+              <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
             </div>
           </div>
 
@@ -74,8 +114,9 @@
               <input type="text" class="form-control" id="notelp" name="notelp" value="<?php echo $notelp ?>">
             </div>
           </div>
+          <p style="font-size:16px; letter-spacing:0px;">Sudah punya akun? <a href="login.php">Login disini</a></p>
             <div class="col-12">
-          <input type="simpan" name="simpan" value="Simpan" style="font-weight:700; font-size:18px; margin-left:90%;" class="btn-login"/>
+            <button name="submit" class="btn-login" style="font-weight:700; font-size:14px; margin-left:90%;">Register</button>   
           </div>
 
 
