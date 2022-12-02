@@ -54,7 +54,8 @@
         <option value="Masyarakat">Masyarakat</option>
       </select>
     </div>
-    <div style="margin-top:10px; margin-left:15%;" class="position-absolute bottom-85 end-60">
+         Belum punya akun? <b><a class="daftar" href="registrasi.php">Daftar</a></b>
+    <div style="margin-left:67%;">
       <button style="font-weight:700;" class="btn-login" type="submit">Log In</button>
     </div>
   </form>
