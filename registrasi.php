@@ -47,7 +47,7 @@ if (isset($_POST['simpan'])) { //create
       $sql1 = "insert into users (nik,nama,username,password,notelp) values ('$nik', '$nama' ,'$username', '$password', '$notelp')";
       $q1   = mysqli_query($koneksi, $sql1);
       if ($q1) {
-        $sukses     = "Berhasil memasukkan data";
+        $sukses     = "Berhasil membuat akun";
       } else {
         $error      = "Gagal memasukkan data";
       }
@@ -112,7 +112,7 @@ if (isset($_POST['simpan'])) { //create
 	}
 	?>
 <div class="container">
-	
+	<form action="" method="POST">
 	
     <div style="margin-left:4.8%; margin-top:2%" class="card">
       <div style="text-align: left;" class="card-body">
@@ -164,6 +164,7 @@ if (isset($_POST['simpan'])) { //create
 
     </div>
     </div>
+    </form>
 </div>
 
 
