@@ -1,42 +1,60 @@
 <?php
-$nik="";
-$nama="";
-$username="";
-$password="";
-$notelp="";
-require_once("koneksi.php");
 
-if(isset($_POST['register'])){
+$host       = "localhost";
+$user       = "root";
+$pass       = "";
+$db         = "pengaduan";
 
-    // filter data yang diinputkan
-    $nik = filter_input(INPUT_POST, 'nik', FILTER_SANITIZE_STRING);
-    $nama = filter_input(INPUT_POST, 'nama', FILTER_SANITIZE_STRING);
-    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-    // enkripsi password
-    $password = password_hash($_POST["password"], PASSWORD_DEFAULT);
-    $notelp = filter_input(INPUT_POST, 'notelp', FILTER_VALIDATE_EMAIL);
+$koneksi    = mysqli_connect($host, $user, $pass, $db);
+if (!$koneksi) {
+  die("Tidak bisa terhubung ke database");
+}
 
 
-    // menyiapkan query
-    $sql = "INSERT INTO users (nik , nama, username, notelp, password) 
-            VALUES (:nik, :nama, :username, :notelp, :password)";
-    $stmt = $db->prepare($sql);
+$nik              ="";
+$nama             ="";
+$username         ="";
+$password         ="";
+$notelp           ="";
+$error            = "";
+$sukses           = "";
 
-    // bind parameter ke query
-    $params = array(
-        ":nik" => $nik,
-        ":nama" => $nama,
-        ":username" => $username,
-        ":password" => $password,
-        ":notelp" => $notelp
-    );
+if (isset($_GET['op'])) {
+  $op = $_GET['op'];
+} else {
+  $op = "";
+}
 
-    // eksekusi query untuk menyimpan ke database
-    $saved = $stmt->execute($params);
+if (isset($_POST['simpan'])) { //create
+  $nik              = $_POST['nik'];
+  $nama             = $_POST['nama'];
+  $username         = $_POST['username'];
+  $password         = $_POST['password'];
+  $notelp           = $_POST['notelp'];
 
-    // jika query simpan berhasil, maka user sudah terdaftar
-    // maka alihkan ke halaman login
-    if($saved) header("Location: login.php");
+
+ if ($nik && $nama && $username && $password && $notelp) {
+    if ($op == 'edit') { //update
+      $sql1   = "update users set nik = '$nik',nama='$nama',username = '$username',password = '$password',notelp = '$notelp' where id = '$id'";
+      $q1     = mysqli_query($koneksi, $sql1);
+      if ($q1) {
+        $sukses = "Data berhasil diperbarui";
+      } else {
+        $error  = "Data gagal diupdate";
+      }
+
+    }else { //insert
+      $sql1 = "insert into users (nik,nama,username,password,notelp) values ('$nik', '$nama' ,'$username', '$password', '$notelp')";
+      $q1   = mysqli_query($koneksi, $sql1);
+      if ($q1) {
+        $sukses     = "Berhasil memasukkan data";
+      } else {
+        $error      = "Gagal memasukkan data";
+      }
+    }
+  } else {
+    $error = "Silahkan masukkan semua data!!";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -63,6 +81,29 @@ if(isset($_POST['register'])){
       </div>
     </nav>
   </div>
+  <?php
+        if ($error) {
+        ?>
+          <div class="alert alert-danger" role="alert">
+            <?php echo $error ?>
+          </div>
+        <?php
+        
+        }
+        ?>
+
+
+
+        <?php
+        if ($sukses) {
+        ?>
+          <div class="alert alert-success" role="alert">
+            <?php echo $sukses ?>
+          </div>
+        <?php
+        }
+        ?>
+
   <?php 
 	if(isset($_GET['pesan'])){
 		if($_GET['pesan']=="gagal"){
@@ -80,7 +121,7 @@ if(isset($_POST['register'])){
         <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
             <label for="nik" class="col-sm-2 col-form-label">NIK</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nik" name="nik" value="<?php echo $nik ?>">
+              <input type="text" class="form-control" id="nik" name="nik" placeholder="Masukkan NIK" value="<?php echo $nik?>">
             </div>
           </div>
 
@@ -88,7 +129,7 @@ if(isset($_POST['register'])){
           <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
             <label for="nama" class="col-sm-2 col-form-label">Nama</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="nama" name="nama" value="<?php echo $nama ?>">
+              <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama" value="<?php echo $nama?>">
             </div>
           </div>
 
@@ -96,14 +137,14 @@ if(isset($_POST['register'])){
           <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
             <label for="username" class="col-sm-2 col-form-label">Username</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="username" name="username" value="<?php echo $username ?>">
+              <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username" value="<?php echo $username?>">
             </div>
           </div>
 
           <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
             <label for="password" class="col-sm-2 col-form-label">Password</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="password" name="password" value="<?php echo $password ?>">
+              <input type="text" class="form-control" id="password" name="password" placeholder="Masukkan Password" value="<?php echo $password?>">
             </div>
           </div>
 
@@ -111,12 +152,12 @@ if(isset($_POST['register'])){
           <div class="mb-3 row" style="font-size: 20px; font-weight:300; letter-spacing:0px;">
             <label for="notelp" class="col-sm-2 col-form-label">No.Telp</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="notelp" name="notelp" value="<?php echo $notelp ?>">
+              <input type="text" class="form-control" id="notelp" name="notelp" placeholder="Masukkan Nomor Telepon" value="<?php echo $notelp ?>">
             </div>
           </div>
           <p style="font-size:16px; letter-spacing:0px;">Sudah punya akun? <a href="login.php">Login disini</a></p>
             <div class="col-12">
-            <button name="submit" class="btn-login" style="font-weight:700; font-size:14px; margin-left:90%;">Register</button>   
+            <input type="submit" name="simpan" value="Simpan" class="btn-login" style="font-weight:700; font-size:14px; margin-left:90%;">   
           </div>
 
 
